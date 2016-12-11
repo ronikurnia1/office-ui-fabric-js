@@ -51,14 +51,14 @@ namespace fabric {
     private _arrow: Element;
 
     constructor(
-        content: HTMLElement,
-        direction: string,
-        targetElement: Element,
-        hasArrow: boolean = true,
-        modifiers?: Array<string>,
-        matchTargetWidth?: boolean,
-        disposalCallback?: Function
-      ) {
+      content: HTMLElement,
+      direction: string,
+      targetElement: Element,
+      hasArrow: boolean = true,
+      modifiers?: Array<string>,
+      matchTargetWidth?: boolean,
+      disposalCallback?: Function
+    ) {
       this._resizeAction = this._resizeAction.bind(this);
       this._dismissAction = this._dismissAction.bind(this);
       this._handleKeyUpDismiss = this._handleKeyUpDismiss.bind(this);
@@ -148,7 +148,7 @@ namespace fabric {
       this._showModal();
 
       // Delay the click setting
-      setTimeout( () => { this._setDismissClick(); }, 100);
+      setTimeout(() => { this._setDismissClick(); }, 100);
     }
 
     private _findAvailablePosition(): void {
@@ -180,16 +180,16 @@ namespace fabric {
             this._tryPosModalBottom.bind(this)
           );
           this._setPosition(_posOk);
-        break;
+          break;
         case "bottom":
           _posOk = this._positionOk(
             this._tryPosModalBottom.bind(this),
             this._tryPosModalTop.bind(this)
           );
           this._setPosition(_posOk);
-        break;
+          break;
         default:
-        this._setPosition();
+          this._setPosition();
       }
     }
 
@@ -214,10 +214,13 @@ namespace fabric {
     }
 
     private _calcLeft(mWidth, teWidth, teLeft): number {
-      let mHalfWidth = mWidth / 2;
-      let teHalf = teWidth / 2;
-      let mHLeft = (teLeft + teHalf) - mHalfWidth;
-      mHLeft = (mHLeft < mHalfWidth) ? teLeft : mHLeft;
+      // let mHalfWidth = mWidth / 2;
+      // let teHalf = teWidth / 2;
+      // center
+      // let mHLeft = (teLeft + teHalf) - mHalfWidth;
+      // right align
+      let mHLeft = (teLeft + teWidth) - mWidth;
+      // mHLeft = (mHLeft < mHalfWidth) ? teLeft : mHLeft;
       return mHLeft;
     }
 
@@ -262,7 +265,7 @@ namespace fabric {
             arrowTop = ((teTop + windowY) - mHTop) + ARROW_OFFSET;
             this._arrow.setAttribute("style", "top: " + arrowTop + "px;");
           }
-        break;
+          break;
         case "right":
           mHTop = this._calcTop(this._modalHeight, teHeight, teTop);
           mHTop += windowY;
@@ -275,7 +278,7 @@ namespace fabric {
             this._arrow.setAttribute("style", "top: " + arrowTop + "px;");
             this._container.classList.add(ARROW_LEFT_CLASS);
           }
-        break;
+          break;
         case "top":
           mHLeft = this._calcLeft(this._modalWidth, this._teWidth, teLeft);
           mHTop = teTop - this._modalHeight - arrowSpace;
@@ -289,7 +292,7 @@ namespace fabric {
             this._arrow.setAttribute("style", "top: " + arrowTop + "px; left: " + arrowLeft + "px;");
             this._container.classList.add(ARROW_BOTTOM_CLASS);
           }
-        break;
+          break;
         case "bottom":
           mHLeft = mHLeft = this._calcLeft(this._modalWidth, this._teWidth, teLeft);
           mHTop = teTop + teHeight + arrowSpace;
@@ -302,9 +305,9 @@ namespace fabric {
             this._arrow.setAttribute("style", "left: " + arrowLeft + "px;");
             this._container.classList.add(ARROW_TOP_CLASS);
           }
-        break;
+          break;
         default:
-          this._container.setAttribute("style", "top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%);");
+          this._container.setAttribute("style", "top: 50%; left: 1%; transform: translateX(-50%) translateY(-50%);");
       }
     }
 
@@ -325,9 +328,9 @@ namespace fabric {
       let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
       if ((w - teRight) < this._modalWidth) {
-      return false;
+        return false;
       } else {
-      return "right";
+        return "right";
       }
     }
 
@@ -367,18 +370,18 @@ namespace fabric {
         let teStyles = window.getComputedStyle(this._targetElement);
         this._modalWidth = this._targetElement.getBoundingClientRect().width
           + (parseInt(teStyles.marginLeft, 10)
-          + parseInt(teStyles.marginLeft, 10));
+            + parseInt(teStyles.marginLeft, 10));
         // Set the ContextualHost width
 
       } else {
         this._modalWidth = this._container.getBoundingClientRect().width
           + (parseInt(_modalStyles.marginLeft, 10)
-          + parseInt(_modalStyles.marginRight, 10));
+            + parseInt(_modalStyles.marginRight, 10));
         this._container.setAttribute("style", "");
       }
       this._modalHeight = this._container.getBoundingClientRect().height
         + (parseInt(_modalStyles.marginTop, 10)
-        + parseInt(_modalStyles.marginBottom, 10));
+          + parseInt(_modalStyles.marginBottom, 10));
 
       this._container.classList.remove(MODAL_STATE_POSITIONED);
       this._container.classList.remove(CONTEXT_STATE_CLASS);
