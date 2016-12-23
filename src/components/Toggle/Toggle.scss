@@ -108,11 +108,11 @@
   &:focus,
   &:hover {
     & + .ms-Toggle-field {
-      border-color: $ms-color-neutralSecondary;
+      border-color: $ms-color-neutralSecondaryAlt;
     }
 
     & + .ms-Toggle-field::before {
-      background-color: $ms-color-neutralPrimary;
+      background-color: $ms-color-neutralSecondary;
     }
 
     &:checked + .ms-Toggle-field {
@@ -147,13 +147,13 @@
     }
 
     .ms-Label {
-      color: $ms-color-black;
+      color: $ms-color-neutralPrimary;
       user-select: none;
     }
 
     &:hover {
       .ms-Label {
-        color: $ms-color-black;
+        color: $ms-color-neutralPrimary;
       }
     }
 

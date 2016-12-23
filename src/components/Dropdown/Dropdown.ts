@@ -86,8 +86,7 @@ namespace fabric {
         newItem.innerHTML = option.text;
         newItem.addEventListener("click", this._onItemSelection);
         this._newDropdown.appendChild(newItem);
-
-        this._dropdownItems.push( {
+        this._dropdownItems.push({
           oldOption: option,
           newItem: newItem
         });
@@ -101,9 +100,10 @@ namespace fabric {
       container.appendChild(this._dropdownLabelHelper);
 
       /** Toggle open/closed state of the dropdown when clicking its title. */
-      this._newDropdownLabel.addEventListener("click", this._onOpenDropdown );
+      this._newDropdownLabel.addEventListener("click", this._onOpenDropdown);
       this._checkTruncation();
       this._setWindowEvent();
+
     }
 
     private _setWindowEvent() {
@@ -116,8 +116,8 @@ namespace fabric {
     private _checkTruncation(): void {
       let selected = this._newDropdown.querySelector(`.${IS_SELECTED_CLASS}`);
       let origText = (selected ?
-                    selected.textContent :
-                    this._newDropdown.querySelectorAll(`.${DROPDOWN_ITEM_CLASS}`)[0].textContent);
+        selected.textContent :
+        this._newDropdown.querySelectorAll(`.${DROPDOWN_ITEM_CLASS}`)[0].textContent);
       this._dropdownLabelHelper.textContent = origText;
       if (this._dropdownLabelHelper.offsetHeight > this._newDropdownLabel.offsetHeight) {
         let i = 0;
@@ -139,8 +139,8 @@ namespace fabric {
         y: 0
       };
       let d = document,
-          e = d.documentElement,
-          g = d.getElementsByTagName("body")[0];
+        e = d.documentElement,
+        g = d.getElementsByTagName("body")[0];
 
       wSize.x = w.innerWidth || e.clientWidth || g.clientWidth;
       wSize.y = w.innerHeight || e.clientHeight || g.clientHeight;
@@ -178,18 +178,18 @@ namespace fabric {
     }
     private _removeDropdownAsPanel(evt?: Event) {
       if (this._panel !== undefined) {
-          /** destroy panel and move dropdown back to outside the panel */
-          /* if event target is overlay element, only append dropdown to prevent */
-          /* double dismiss bug, otherwise, dismiss and append */
-          if (evt && evt.target === this._panel.panelHost.overlay.overlayElement) {
+        /** destroy panel and move dropdown back to outside the panel */
+        /* if event target is overlay element, only append dropdown to prevent */
+        /* double dismiss bug, otherwise, dismiss and append */
+        if (evt && evt.target === this._panel.panelHost.overlay.overlayElement) {
+          this._container.appendChild(this._newDropdown);
+        } else {
+          this._panel.dismiss(() => {
             this._container.appendChild(this._newDropdown);
-          } else {
-            this._panel.dismiss(() => {
-              this._container.appendChild(this._newDropdown);
-            });
-          }
-          this._panel = undefined;
+          });
         }
+        this._panel = undefined;
+      }
     }
 
     private _onOpenDropdown(evt: Event) {
@@ -231,26 +231,26 @@ namespace fabric {
       let isDropdownDisabled = this._container.classList.contains(IS_DISABLED_CLASS);
       let isOptionDisabled = item.classList.contains(IS_DISABLED_CLASS);
       if (!isDropdownDisabled && !isOptionDisabled) {
-          /** Deselect all items and select this one. */
-          /** Update the original dropdown. */
-          for (let i = 0; i < this._dropdownItems.length; ++i) {
-            if (this._dropdownItems[i].newItem === item) {
-              this._dropdownItems[i].newItem.classList.add(IS_SELECTED_CLASS);
-              this._dropdownItems[i].oldOption.selected = true;
-            } else {
-              this._dropdownItems[i].newItem.classList.remove(IS_SELECTED_CLASS);
-              this._dropdownItems[i].oldOption.selected = false;
-            }
+        /** Deselect all items and select this one. */
+        /** Update the original dropdown. */
+        for (let i = 0; i < this._dropdownItems.length; ++i) {
+          if (this._dropdownItems[i].newItem === item) {
+            this._dropdownItems[i].newItem.classList.add(IS_SELECTED_CLASS);
+            this._dropdownItems[i].oldOption.selected = true;
+          } else {
+            this._dropdownItems[i].newItem.classList.remove(IS_SELECTED_CLASS);
+            this._dropdownItems[i].oldOption.selected = false;
           }
+        }
 
-          /** Update the replacement dropdown's title. */
-          this._newDropdownLabel.innerHTML = item.textContent;
-          this._checkTruncation();
+        /** Update the replacement dropdown's title. */
+        this._newDropdownLabel.innerHTML = item.textContent;
+        this._checkTruncation();
 
-          /** Trigger any change event tied to the original dropdown. */
-          let changeEvent = document.createEvent("HTMLEvents");
-          changeEvent.initEvent("change", false, true);
-          this._originalDropdown.dispatchEvent(changeEvent);
+        /** Trigger any change event tied to the original dropdown. */
+        let changeEvent = document.createEvent("HTMLEvents");
+        changeEvent.initEvent("change", false, true);
+        this._originalDropdown.dispatchEvent(changeEvent);
       }
     }
   }

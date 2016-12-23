@@ -6,7 +6,7 @@
   min-width: 10px;
   display: none;
   background-color: $ms-color-white;
-  @include drop-shadow;
+  @include drop-shadow(0, 0, 10px, 0, .2);
 
   &.is-positioned {
     position: absolute;

@@ -6,8 +6,8 @@ namespace fabric {
 
   module TextFieldConsts {
     export enum Type {
-        Placeholder,
-        Underlined
+      Placeholder,
+      Underlined
     }
   }
 
@@ -51,7 +51,9 @@ namespace fabric {
     private _addListeners(): void {
       // Ensure that the text box gets focus when the label is clicked.
       this._textFieldLabel.addEventListener("click", (event: MouseEvent) => {
-        this._textField.focus();
+        if (this._textField) {
+          this._textField.focus();
+        }
       });
       /** Placeholder - hide/unhide the placeholder  */
       if (this._type.indexOf(TextFieldConsts.Type.Placeholder) >= 0) {

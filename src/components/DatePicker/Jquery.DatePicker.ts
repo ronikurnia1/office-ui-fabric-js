@@ -18,6 +18,8 @@ namespace fabric {
       let $dateField: any = $datePicker.find(".ms-TextField-field").pickadate($.extend({
         // Strings and translations.
         weekdaysShort: ["S", "M", "T", "W", "T", "F", "S"],
+        // format
+        // format: "yyyy-mm-dd",
 
         // Don't render the buttons
         clear: "",

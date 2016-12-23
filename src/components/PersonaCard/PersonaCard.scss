@@ -194,7 +194,7 @@
 @media (min-width: $ms-screen-md-min) {
   // Undock the persona card and give it a shadow.
   .ms-PersonaCard {
-    @include drop-shadow;
+    @include drop-shadow(0, 0, 10px, 0, .2);
     max-width: 360px;
     position: relative;
   }

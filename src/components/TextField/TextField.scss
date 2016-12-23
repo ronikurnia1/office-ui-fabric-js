@@ -52,6 +52,7 @@
 }
 
 .ms-TextField-field {
+  @include ms-baseFont;
   @include ms-u-normalize;
   border: 1px solid $ms-color-neutralTertiaryAlt;
   border-radius: 0;
